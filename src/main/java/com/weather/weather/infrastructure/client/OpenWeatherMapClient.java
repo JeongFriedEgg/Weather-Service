@@ -1,5 +1,6 @@
 package com.weather.weather.infrastructure.client;
 
+import com.weather.weather.domain.DateWeather;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -11,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,5 +70,17 @@ public class OpenWeatherMapClient {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public DateWeather getWeatherFromApi() {
+        String weatherJson = fetchWeather();
+        Map<String, Object> parsedWeather = parseWeather(weatherJson);
+
+        DateWeather dateWeather = new DateWeather();
+        dateWeather.setDate(LocalDate.now());
+        dateWeather.setWeather(parsedWeather.get("main").toString());
+        dateWeather.setIcon(parsedWeather.get("icon").toString());
+        dateWeather.setTemperature((Double) parsedWeather.get("temp"));
+        return dateWeather;
     }
 }
