@@ -40,4 +40,8 @@ public class DiaryService {
         logger.debug("read diary");
         return diaryRepository.findAllByDate(date);
     }
+
+    public List<Diary> readDiaries(LocalDate startDate, LocalDate endDate) {
+        return diaryRepository.findAllByDateBetween(startDate,endDate);
+    }
 }

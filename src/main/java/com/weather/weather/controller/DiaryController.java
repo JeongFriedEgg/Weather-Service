@@ -11,11 +11,10 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/diary")
 public class DiaryController {
     private final DiaryService diaryService;
 
-    @PostMapping
+    @PostMapping("/diary")
     void createDiary(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
             @RequestBody String text
@@ -23,10 +22,18 @@ public class DiaryController {
         diaryService.createDiary(date, text);
     }
 
-    @GetMapping
+    @GetMapping("/diary")
     List<Diary> readDiary(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
         return diaryService.readDiary(date);
+    }
+
+    @GetMapping("/diaries")
+    List<Diary> readDiaries(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
+    ) {
+        return diaryService.readDiaries(startDate,endDate);
     }
 }
