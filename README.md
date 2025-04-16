@@ -19,6 +19,16 @@
 - **데이터 저장**: 매일 1시, 스케쥴러를 통해 최신 날씨 데이터를 가져와 로컬 DB에 저장
 
 
+## ⚙️ 외부 API 키 설정추가
+
+```properties
+spring.config.import=optional:classpath:application-secret.properties
+```
+- 깃허브에 Open API 키를 노출시키지 않도록 하기 위해 ```application-secret.properties``` 파일을 따로 생성하여 해당 파일에서 api 키 설정을 가져오도록 하였습니다. Open API 를 사용하기 위해 다음과 같이 설정을 추가하여야 합니다.
+```properties
+openweathermap.key=XXXXXXXXXXXXXXXX
+```
+
 
 ## 🔄 스케쥴링
 
