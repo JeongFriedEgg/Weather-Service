@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -32,5 +33,11 @@ public class DiaryService {
         diary.setDate(date);
         diaryRepository.save(diary);
         logger.info("end to create diary");
+    }
+
+    @Transactional(readOnly = true)
+    public List<Diary> readDiary(LocalDate date) {
+        logger.debug("read diary");
+        return diaryRepository.findAllByDate(date);
     }
 }
